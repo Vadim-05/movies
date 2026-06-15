@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@layer utilities{
+  @keyframes fadeIn {
+    from{
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to{
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .animate-fadeIn{
+    animation: fadeIn 0.2s ease-out;
+  }
+}
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #000;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: #e50914;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+a:hover {
+  color: #ff1f1f;
+}
+
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background-color: #000;
+  color: #fff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  margin-bottom: 0.5em;
+}
+button{
+  cursor: pointer;
+}
+a.link{
+  color: white;
+  text-align: center;
+}
+a.btn,
+button.btn {
+  text-align: center;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: inherit;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+section{
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}

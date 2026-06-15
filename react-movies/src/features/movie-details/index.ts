@@ -1,0 +1,1 @@
+export { MovieDetails } from "@/features/movie-details/ui/MovieDetails";
