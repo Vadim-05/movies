@@ -1,0 +1,1 @@
+export { NotFound } from "@/shared/ui/not-found/NotFound";

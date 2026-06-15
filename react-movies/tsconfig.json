@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+      /* Language and Environment */
+      "target": "ES2022",
+      "lib": ["DOM", "DOM.Iterable", "ES2022"],
+      "jsx": "react-jsx",
+  
+      /* Modules */
+      "module": "ESNext",
+      "moduleResolution": "bundler",
+      "allowImportingTsExtensions": true,
+      "resolveJsonModule": true,
+  
+      /* Emit Rules */
+      "noEmit": true,
+  
+      /* Interop Constraints */
+      "isolatedModules": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+  
+      /* Type Checking Rules */
+      "strict": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noImplicitReturns": true,
+      "skipLibCheck": true,
+      
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["src/*"]
+      }
+    },
+    "include": ["src", "app/router"],
+    "exclude": ["node_modules"]
+  }
+  

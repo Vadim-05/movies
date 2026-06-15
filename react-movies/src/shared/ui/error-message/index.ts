@@ -1,0 +1,1 @@
+export { ErrorMessage } from "@/shared/ui/error-message/ErrorMessage"

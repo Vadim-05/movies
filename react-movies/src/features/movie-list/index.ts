@@ -1,0 +1,1 @@
+export { MovieList } from "@/features/movie-list/ui/MovieList";
