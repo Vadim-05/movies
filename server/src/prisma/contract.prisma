@@ -1,0 +1,173 @@
+// use prisma-8
+
+model User {
+  id           Int          @id @default(autoincrement())
+  email        String       @unique
+  passwordHash String
+  username     String?      @unique
+  name         String?
+
+  sessions     AuthSession[]
+  favorites    FavoriteMovie[]
+  genres       UserGenre[]
+
+  createdAt    TimestamptzString @default(now())
+  updatedAt    temporal.updatedAtString()
+}
+
+model AuthSession {
+  id                String   @id @onCreate(uuid())
+  userId            Int
+  tokenHash         String   @unique
+
+  expiresAt         TimestamptzString
+  absoluteExpiresAt TimestamptzString
+
+  revokedAt         TimestamptzString?
+  createdAt         TimestamptzString @default(now())
+  updatedAt         temporal.updatedAtString()
+
+  user User @relation(
+    fields: [userId],
+    references: [id],
+    onDelete: Cascade
+  )
+
+  usedRefreshTokens UsedRefreshToken[]
+
+  @@index([userId, expiresAt])
+  @@index([expiresAt])
+  @@index([absoluteExpiresAt])
+}
+
+model UsedRefreshToken {
+  id        String   @id @onCreate(uuid())
+  sessionId String
+  tokenHash String   @unique
+  usedAt    TimestamptzString @default(now())
+
+  session AuthSession @relation(
+    fields: [sessionId],
+    references: [id],
+    onDelete: Cascade
+  )
+
+  @@index([sessionId, usedAt])
+}
+
+model Movie {
+  id               Int      @id @default(autoincrement())
+  title            String
+  description      String
+  releaseDate      String?
+  runtimeMinutes   Int?
+  originalLanguage String?
+  rating           Float?
+  posterUrl        String?
+  trailerUrl       String?
+
+  genres           MovieGenre[]
+  characters       MovieCharacter[]
+  favorites        FavoriteMovie[]
+
+  createdAt        TimestamptzString @default(now())
+  updatedAt        temporal.updatedAtString()
+
+  @@index([title])
+  @@index([releaseDate])
+  @@index([rating])
+}
+
+model Genre {
+  id             Int      @id @default(autoincrement())
+  name           String
+  normalizedName String   @unique
+
+  movies         MovieGenre[]
+  users          UserGenre[]
+
+  createdAt      TimestamptzString @default(now())
+  updatedAt      temporal.updatedAtString()
+}
+
+model MovieGenre {
+  movieId Int
+  genreId Int
+
+  movie Movie @relation(
+    fields: [movieId],
+    references: [id],
+    onDelete: Cascade
+  )
+
+  genre Genre @relation(
+    fields: [genreId],
+    references: [id],
+    onDelete: Cascade
+  )
+
+  @@id([movieId, genreId])
+  @@index([genreId, movieId])
+}
+
+model UserGenre {
+  userId    Int
+  genreId   Int
+  createdAt TimestamptzString @default(now())
+
+  user User @relation(
+    fields: [userId],
+    references: [id],
+    onDelete: Cascade
+  )
+
+  genre Genre @relation(
+    fields: [genreId],
+    references: [id],
+    onDelete: Cascade
+  )
+
+  @@id([userId, genreId])
+  @@index([genreId, userId])
+}
+
+model MovieCharacter {
+  id                Int      @id @default(autoincrement())
+  movieId           Int
+  characterName     String
+  characterPhotoUrl String?
+  castOrder         Int      @default(0)
+
+  movie Movie @relation(
+    fields: [movieId],
+    references: [id],
+    onDelete: Cascade
+  )
+
+  createdAt         TimestamptzString @default(now())
+  updatedAt         temporal.updatedAtString()
+
+  @@index([movieId, castOrder])
+}
+
+model FavoriteMovie {
+  userId    Int
+  movieId   Int
+  createdAt TimestamptzString @default(now())
+
+  user User @relation(
+    fields: [userId],
+    references: [id],
+    onDelete: Cascade
+  )
+
+  movie Movie @relation(
+    fields: [movieId],
+    references: [id],
+    onDelete: Cascade
+  )
+
+  @@id([userId, movieId])
+  @@index([movieId])
+  @@index([userId, createdAt])
+}

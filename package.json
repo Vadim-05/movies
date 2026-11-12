@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@prisma/orm-postgres": "^8.0.0-rc.23"
+  },
+  "devDependencies": {
+    "prisma": "^8.0.0-rc.33",
+    "typescript": "^5.9.3"
+  }
+}

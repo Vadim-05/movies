@@ -1,0 +1,45 @@
+{
+  "name": "movie-app-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Movie App REST API",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "contract:emit": "prisma contract emit"
+  },
+  "dependencies": {
+    "@prisma/orm-postgres": "^8.0.0-rc.20",
+    "argon2": "^0.45.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.7.1",
+    "helmet": "^8.3.0",
+    "jose": "^6.2.13",
+    "pino": "^10.4.0",
+    "pino-http": "^11.0.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@prisma/cli-engine": "^0.9.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^22.20.5",
+    "prisma": "^8.0.0-rc.27",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "argon2@0.45.1": true
+  }
+}

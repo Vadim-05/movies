@@ -1,0 +1,35 @@
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: movie-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      server:
+        condition: service_started
+    restart: unless-stopped
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: movie-server
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./server/.env
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      CORS_ORIGINS: http://localhost:8080
+      JWT_SECRET_FILE: /run/secrets/jwt_secret
+    secrets:
+      - jwt_secret
+    restart: unless-stopped
+
+secrets:
+  jwt_secret:
+    file: ./server/secrets/jwt_secret.txt

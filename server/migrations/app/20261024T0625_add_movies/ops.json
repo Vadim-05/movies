@@ -1,0 +1,1328 @@
+[
+  {
+    "id": "table.Actor",
+    "label": "Create table \"Actor\"",
+    "summary": "Creates table \"Actor\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Actor"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Actor\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Actor\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Actor\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Actor\"",
+        "sql": "CREATE TABLE \"public\".\"Actor\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"name\" text NOT NULL,\n  \"photoUrl\" text,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Actor\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"Actor\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Actor\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.FavoriteMovie",
+    "label": "Create table \"FavoriteMovie\"",
+    "summary": "Creates table \"FavoriteMovie\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "FavoriteMovie"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"FavoriteMovie\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"FavoriteMovie\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"FavoriteMovie\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"FavoriteMovie\"",
+        "sql": "CREATE TABLE \"public\".\"FavoriteMovie\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"movieId\" int4 NOT NULL,\n  \"userId\" int4 NOT NULL,\n  PRIMARY KEY (\"userId\", \"movieId\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"FavoriteMovie\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"FavoriteMovie\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"FavoriteMovie\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.Genre",
+    "label": "Create table \"Genre\"",
+    "summary": "Creates table \"Genre\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Genre"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Genre\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Genre\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Genre\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Genre\"",
+        "sql": "CREATE TABLE \"public\".\"Genre\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"name\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Genre\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"Genre\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Genre\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.Movie",
+    "label": "Create table \"Movie\"",
+    "summary": "Creates table \"Movie\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Movie"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Movie\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Movie\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"Movie\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Movie\"",
+        "sql": "CREATE TABLE \"public\".\"Movie\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"description\" text NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"originalLanguage\" text,\n  \"posterUrl\" text,\n  \"rating\" float8,\n  \"releaseDate\" text,\n  \"runtimeMinutes\" int4,\n  \"title\" text NOT NULL,\n  \"trailerUrl\" text,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Movie\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"Movie\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"Movie\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.MovieActor",
+    "label": "Create table \"MovieActor\"",
+    "summary": "Creates table \"MovieActor\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "MovieActor"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"MovieActor\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"MovieActor\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"MovieActor\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"MovieActor\"",
+        "sql": "CREATE TABLE \"public\".\"MovieActor\" (\n  \"actorId\" int4 NOT NULL,\n  \"castOrder\" int4 DEFAULT 0 NOT NULL,\n  \"characterName\" text,\n  \"movieId\" int4 NOT NULL,\n  PRIMARY KEY (\"movieId\", \"actorId\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"MovieActor\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"MovieActor\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"MovieActor\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "table.MovieGenre",
+    "label": "Create table \"MovieGenre\"",
+    "summary": "Creates table \"MovieGenre\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "MovieGenre"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"MovieGenre\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"MovieGenre\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "table \"MovieGenre\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"MovieGenre\"",
+        "sql": "CREATE TABLE \"public\".\"MovieGenre\" (\n  \"genreId\" int4 NOT NULL,\n  \"movieId\" int4 NOT NULL,\n  PRIMARY KEY (\"movieId\", \"genreId\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"MovieGenre\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3))) AS \"result\"",
+        "params": [
+          "\"public\".\"MovieGenre\"",
+          "r",
+          "p"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "table \"MovieGenre\""
+        }
+      }
+    ]
+  },
+  {
+    "id": "unique.Genre.Genre_name_key",
+    "label": "Add unique constraint on \"Genre\" (name)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "Genre_name_key",
+        "table": "Genre"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"Genre_name_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Genre_name_key",
+          "public",
+          "\"public\".\"Genre\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "constraint \"Genre_name_key\" on \"Genre\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"Genre_name_key\"",
+        "sql": "ALTER TABLE \"public\".\"Genre\" ADD CONSTRAINT \"Genre_name_key\" UNIQUE (\"name\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify unique constraint \"Genre_name_key\" exists on (name)",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb)) AS \"result\"",
+        "params": [
+          "Genre_name_key",
+          "public",
+          "\"public\".\"Genre\"",
+          "u",
+          "[\"name\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Actor.Actor_name_idx_ce87e6ba",
+    "label": "Create index \"Actor_name_idx_ce87e6ba\" on \"Actor\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Actor_name_idx_ce87e6ba",
+        "table": "Actor"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Actor_name_idx_ce87e6ba\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Actor_name_idx_ce87e6ba\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Actor_name_idx_ce87e6ba\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Actor_name_idx_ce87e6ba\"",
+        "sql": "CREATE INDEX \"Actor_name_idx_ce87e6ba\" ON \"public\".\"Actor\" (\"name\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Actor_name_idx_ce87e6ba\" exists on \"Actor\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Actor_name_idx_ce87e6ba\"",
+          "i",
+          "I",
+          "\"public\".\"Actor\"",
+          "btree",
+          "[\"name\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.FavoriteMovie.FavoriteMovie_movieId_idx_8cb9f9db",
+    "label": "Create index \"FavoriteMovie_movieId_idx_8cb9f9db\" on \"FavoriteMovie\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "FavoriteMovie_movieId_idx_8cb9f9db",
+        "table": "FavoriteMovie"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"FavoriteMovie_movieId_idx_8cb9f9db\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"FavoriteMovie_movieId_idx_8cb9f9db\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"FavoriteMovie_movieId_idx_8cb9f9db\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"FavoriteMovie_movieId_idx_8cb9f9db\"",
+        "sql": "CREATE INDEX \"FavoriteMovie_movieId_idx_8cb9f9db\" ON \"public\".\"FavoriteMovie\" (\"movieId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"FavoriteMovie_movieId_idx_8cb9f9db\" exists on \"FavoriteMovie\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"FavoriteMovie_movieId_idx_8cb9f9db\"",
+          "i",
+          "I",
+          "\"public\".\"FavoriteMovie\"",
+          "btree",
+          "[\"movieId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.FavoriteMovie.FavoriteMovie_userId_createdAt_idx_f726f04a",
+    "label": "Create index \"FavoriteMovie_userId_createdAt_idx_f726f04a\" on \"FavoriteMovie\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "FavoriteMovie_userId_createdAt_idx_f726f04a",
+        "table": "FavoriteMovie"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"FavoriteMovie_userId_createdAt_idx_f726f04a\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"FavoriteMovie_userId_createdAt_idx_f726f04a\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"FavoriteMovie_userId_createdAt_idx_f726f04a\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"FavoriteMovie_userId_createdAt_idx_f726f04a\"",
+        "sql": "CREATE INDEX \"FavoriteMovie_userId_createdAt_idx_f726f04a\" ON \"public\".\"FavoriteMovie\" (\"userId\", \"createdAt\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"FavoriteMovie_userId_createdAt_idx_f726f04a\" exists on \"FavoriteMovie\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"FavoriteMovie_userId_createdAt_idx_f726f04a\"",
+          "i",
+          "I",
+          "\"public\".\"FavoriteMovie\"",
+          "btree",
+          "[\"userId\",\"createdAt\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.FavoriteMovie.FavoriteMovie_userId_idx_a489d58a",
+    "label": "Create index \"FavoriteMovie_userId_idx_a489d58a\" on \"FavoriteMovie\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "FavoriteMovie_userId_idx_a489d58a",
+        "table": "FavoriteMovie"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"FavoriteMovie_userId_idx_a489d58a\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"FavoriteMovie_userId_idx_a489d58a\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"FavoriteMovie_userId_idx_a489d58a\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"FavoriteMovie_userId_idx_a489d58a\"",
+        "sql": "CREATE INDEX \"FavoriteMovie_userId_idx_a489d58a\" ON \"public\".\"FavoriteMovie\" (\"userId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"FavoriteMovie_userId_idx_a489d58a\" exists on \"FavoriteMovie\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"FavoriteMovie_userId_idx_a489d58a\"",
+          "i",
+          "I",
+          "\"public\".\"FavoriteMovie\"",
+          "btree",
+          "[\"userId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Movie.Movie_rating_idx_fcb0b199",
+    "label": "Create index \"Movie_rating_idx_fcb0b199\" on \"Movie\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Movie_rating_idx_fcb0b199",
+        "table": "Movie"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Movie_rating_idx_fcb0b199\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Movie_rating_idx_fcb0b199\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Movie_rating_idx_fcb0b199\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Movie_rating_idx_fcb0b199\"",
+        "sql": "CREATE INDEX \"Movie_rating_idx_fcb0b199\" ON \"public\".\"Movie\" (\"rating\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Movie_rating_idx_fcb0b199\" exists on \"Movie\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Movie_rating_idx_fcb0b199\"",
+          "i",
+          "I",
+          "\"public\".\"Movie\"",
+          "btree",
+          "[\"rating\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Movie.Movie_releaseDate_idx_6baed0ae",
+    "label": "Create index \"Movie_releaseDate_idx_6baed0ae\" on \"Movie\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Movie_releaseDate_idx_6baed0ae",
+        "table": "Movie"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Movie_releaseDate_idx_6baed0ae\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Movie_releaseDate_idx_6baed0ae\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Movie_releaseDate_idx_6baed0ae\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Movie_releaseDate_idx_6baed0ae\"",
+        "sql": "CREATE INDEX \"Movie_releaseDate_idx_6baed0ae\" ON \"public\".\"Movie\" (\"releaseDate\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Movie_releaseDate_idx_6baed0ae\" exists on \"Movie\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Movie_releaseDate_idx_6baed0ae\"",
+          "i",
+          "I",
+          "\"public\".\"Movie\"",
+          "btree",
+          "[\"releaseDate\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.Movie.Movie_title_idx_1c94c7b6",
+    "label": "Create index \"Movie_title_idx_1c94c7b6\" on \"Movie\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "Movie_title_idx_1c94c7b6",
+        "table": "Movie"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"Movie_title_idx_1c94c7b6\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Movie_title_idx_1c94c7b6\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"Movie_title_idx_1c94c7b6\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"Movie_title_idx_1c94c7b6\"",
+        "sql": "CREATE INDEX \"Movie_title_idx_1c94c7b6\" ON \"public\".\"Movie\" (\"title\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"Movie_title_idx_1c94c7b6\" exists on \"Movie\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"Movie_title_idx_1c94c7b6\"",
+          "i",
+          "I",
+          "\"public\".\"Movie\"",
+          "btree",
+          "[\"title\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.MovieActor.MovieActor_actorId_idx_a58f6b4b",
+    "label": "Create index \"MovieActor_actorId_idx_a58f6b4b\" on \"MovieActor\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "MovieActor_actorId_idx_a58f6b4b",
+        "table": "MovieActor"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"MovieActor_actorId_idx_a58f6b4b\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"MovieActor_actorId_idx_a58f6b4b\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"MovieActor_actorId_idx_a58f6b4b\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"MovieActor_actorId_idx_a58f6b4b\"",
+        "sql": "CREATE INDEX \"MovieActor_actorId_idx_a58f6b4b\" ON \"public\".\"MovieActor\" (\"actorId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"MovieActor_actorId_idx_a58f6b4b\" exists on \"MovieActor\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"MovieActor_actorId_idx_a58f6b4b\"",
+          "i",
+          "I",
+          "\"public\".\"MovieActor\"",
+          "btree",
+          "[\"actorId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.MovieActor.MovieActor_actorId_movieId_idx_0e65af2d",
+    "label": "Create index \"MovieActor_actorId_movieId_idx_0e65af2d\" on \"MovieActor\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "MovieActor_actorId_movieId_idx_0e65af2d",
+        "table": "MovieActor"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"MovieActor_actorId_movieId_idx_0e65af2d\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"MovieActor_actorId_movieId_idx_0e65af2d\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"MovieActor_actorId_movieId_idx_0e65af2d\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"MovieActor_actorId_movieId_idx_0e65af2d\"",
+        "sql": "CREATE INDEX \"MovieActor_actorId_movieId_idx_0e65af2d\" ON \"public\".\"MovieActor\" (\"actorId\", \"movieId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"MovieActor_actorId_movieId_idx_0e65af2d\" exists on \"MovieActor\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"MovieActor_actorId_movieId_idx_0e65af2d\"",
+          "i",
+          "I",
+          "\"public\".\"MovieActor\"",
+          "btree",
+          "[\"actorId\",\"movieId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.MovieActor.MovieActor_movieId_castOrder_idx_ef7a6e6e",
+    "label": "Create index \"MovieActor_movieId_castOrder_idx_ef7a6e6e\" on \"MovieActor\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "MovieActor_movieId_castOrder_idx_ef7a6e6e",
+        "table": "MovieActor"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"MovieActor_movieId_castOrder_idx_ef7a6e6e\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"MovieActor_movieId_castOrder_idx_ef7a6e6e\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"MovieActor_movieId_castOrder_idx_ef7a6e6e\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"MovieActor_movieId_castOrder_idx_ef7a6e6e\"",
+        "sql": "CREATE INDEX \"MovieActor_movieId_castOrder_idx_ef7a6e6e\" ON \"public\".\"MovieActor\" (\"movieId\", \"castOrder\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"MovieActor_movieId_castOrder_idx_ef7a6e6e\" exists on \"MovieActor\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"MovieActor_movieId_castOrder_idx_ef7a6e6e\"",
+          "i",
+          "I",
+          "\"public\".\"MovieActor\"",
+          "btree",
+          "[\"movieId\",\"castOrder\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.MovieActor.MovieActor_movieId_idx_8cb9f9db",
+    "label": "Create index \"MovieActor_movieId_idx_8cb9f9db\" on \"MovieActor\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "MovieActor_movieId_idx_8cb9f9db",
+        "table": "MovieActor"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"MovieActor_movieId_idx_8cb9f9db\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"MovieActor_movieId_idx_8cb9f9db\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"MovieActor_movieId_idx_8cb9f9db\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"MovieActor_movieId_idx_8cb9f9db\"",
+        "sql": "CREATE INDEX \"MovieActor_movieId_idx_8cb9f9db\" ON \"public\".\"MovieActor\" (\"movieId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"MovieActor_movieId_idx_8cb9f9db\" exists on \"MovieActor\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"MovieActor_movieId_idx_8cb9f9db\"",
+          "i",
+          "I",
+          "\"public\".\"MovieActor\"",
+          "btree",
+          "[\"movieId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.MovieGenre.MovieGenre_genreId_idx_8fce6a7b",
+    "label": "Create index \"MovieGenre_genreId_idx_8fce6a7b\" on \"MovieGenre\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "MovieGenre_genreId_idx_8fce6a7b",
+        "table": "MovieGenre"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"MovieGenre_genreId_idx_8fce6a7b\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"MovieGenre_genreId_idx_8fce6a7b\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"MovieGenre_genreId_idx_8fce6a7b\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"MovieGenre_genreId_idx_8fce6a7b\"",
+        "sql": "CREATE INDEX \"MovieGenre_genreId_idx_8fce6a7b\" ON \"public\".\"MovieGenre\" (\"genreId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"MovieGenre_genreId_idx_8fce6a7b\" exists on \"MovieGenre\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"MovieGenre_genreId_idx_8fce6a7b\"",
+          "i",
+          "I",
+          "\"public\".\"MovieGenre\"",
+          "btree",
+          "[\"genreId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.MovieGenre.MovieGenre_genreId_movieId_idx_9090cb08",
+    "label": "Create index \"MovieGenre_genreId_movieId_idx_9090cb08\" on \"MovieGenre\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "MovieGenre_genreId_movieId_idx_9090cb08",
+        "table": "MovieGenre"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"MovieGenre_genreId_movieId_idx_9090cb08\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"MovieGenre_genreId_movieId_idx_9090cb08\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"MovieGenre_genreId_movieId_idx_9090cb08\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"MovieGenre_genreId_movieId_idx_9090cb08\"",
+        "sql": "CREATE INDEX \"MovieGenre_genreId_movieId_idx_9090cb08\" ON \"public\".\"MovieGenre\" (\"genreId\", \"movieId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"MovieGenre_genreId_movieId_idx_9090cb08\" exists on \"MovieGenre\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"MovieGenre_genreId_movieId_idx_9090cb08\"",
+          "i",
+          "I",
+          "\"public\".\"MovieGenre\"",
+          "btree",
+          "[\"genreId\",\"movieId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.MovieGenre.MovieGenre_movieId_idx_8cb9f9db",
+    "label": "Create index \"MovieGenre_movieId_idx_8cb9f9db\" on \"MovieGenre\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "MovieGenre_movieId_idx_8cb9f9db",
+        "table": "MovieGenre"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"MovieGenre_movieId_idx_8cb9f9db\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"MovieGenre_movieId_idx_8cb9f9db\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "index \"MovieGenre_movieId_idx_8cb9f9db\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"MovieGenre_movieId_idx_8cb9f9db\"",
+        "sql": "CREATE INDEX \"MovieGenre_movieId_idx_8cb9f9db\" ON \"public\".\"MovieGenre\" (\"movieId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"MovieGenre_movieId_idx_8cb9f9db\" exists on \"MovieGenre\" with the planned definition",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_class\" AS \"c\" INNER JOIN \"pg_index\" AS \"i\" ON \"i\".\"indexrelid\" = \"c\".\"oid\" INNER JOIN \"pg_am\" AS \"m\" ON \"m\".\"oid\" = \"c\".\"relam\" WHERE (\"c\".\"oid\" = to_regclass($1) AND (\"c\".\"relkind\" = $2 OR \"c\".\"relkind\" = $3) AND \"i\".\"indrelid\" = to_regclass($4) AND NOT (\"i\".\"indisunique\") AND \"m\".\"amname\" = $5 AND (\"i\".\"indexprs\" IS NULL AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"i\".\"indkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"i\".\"indrelid\" AND key_attribute.attnum = key_column.attnum) = ($6)::jsonb) AND \"i\".\"indpred\" IS NULL)) AS \"result\"",
+        "params": [
+          "\"public\".\"MovieGenre_movieId_idx_8cb9f9db\"",
+          "i",
+          "I",
+          "\"public\".\"MovieGenre\"",
+          "btree",
+          "[\"movieId\"]"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.FavoriteMovie.FavoriteMovie_userId_fkey",
+    "label": "Add foreign key \"FavoriteMovie_userId_fkey\" on \"FavoriteMovie\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "FavoriteMovie_userId_fkey",
+        "table": "FavoriteMovie"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"FavoriteMovie_userId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "FavoriteMovie_userId_fkey",
+          "public",
+          "\"public\".\"FavoriteMovie\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"FavoriteMovie_userId_fkey\" on \"FavoriteMovie\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"FavoriteMovie_userId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"FavoriteMovie\"\nADD CONSTRAINT \"FavoriteMovie_userId_fkey\"\nFOREIGN KEY (\"userId\")\nREFERENCES \"public\".\"User\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"FavoriteMovie_userId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "FavoriteMovie_userId_fkey",
+          "public",
+          "\"public\".\"FavoriteMovie\"",
+          "f",
+          "[\"userId\"]",
+          "\"public\".\"User\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.FavoriteMovie.FavoriteMovie_movieId_fkey",
+    "label": "Add foreign key \"FavoriteMovie_movieId_fkey\" on \"FavoriteMovie\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "FavoriteMovie_movieId_fkey",
+        "table": "FavoriteMovie"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"FavoriteMovie_movieId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "FavoriteMovie_movieId_fkey",
+          "public",
+          "\"public\".\"FavoriteMovie\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"FavoriteMovie_movieId_fkey\" on \"FavoriteMovie\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"FavoriteMovie_movieId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"FavoriteMovie\"\nADD CONSTRAINT \"FavoriteMovie_movieId_fkey\"\nFOREIGN KEY (\"movieId\")\nREFERENCES \"public\".\"Movie\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"FavoriteMovie_movieId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "FavoriteMovie_movieId_fkey",
+          "public",
+          "\"public\".\"FavoriteMovie\"",
+          "f",
+          "[\"movieId\"]",
+          "\"public\".\"Movie\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.MovieActor.MovieActor_movieId_fkey",
+    "label": "Add foreign key \"MovieActor_movieId_fkey\" on \"MovieActor\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "MovieActor_movieId_fkey",
+        "table": "MovieActor"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"MovieActor_movieId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "MovieActor_movieId_fkey",
+          "public",
+          "\"public\".\"MovieActor\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"MovieActor_movieId_fkey\" on \"MovieActor\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"MovieActor_movieId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"MovieActor\"\nADD CONSTRAINT \"MovieActor_movieId_fkey\"\nFOREIGN KEY (\"movieId\")\nREFERENCES \"public\".\"Movie\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"MovieActor_movieId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "MovieActor_movieId_fkey",
+          "public",
+          "\"public\".\"MovieActor\"",
+          "f",
+          "[\"movieId\"]",
+          "\"public\".\"Movie\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.MovieActor.MovieActor_actorId_fkey",
+    "label": "Add foreign key \"MovieActor_actorId_fkey\" on \"MovieActor\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "MovieActor_actorId_fkey",
+        "table": "MovieActor"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"MovieActor_actorId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "MovieActor_actorId_fkey",
+          "public",
+          "\"public\".\"MovieActor\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"MovieActor_actorId_fkey\" on \"MovieActor\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"MovieActor_actorId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"MovieActor\"\nADD CONSTRAINT \"MovieActor_actorId_fkey\"\nFOREIGN KEY (\"actorId\")\nREFERENCES \"public\".\"Actor\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"MovieActor_actorId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "MovieActor_actorId_fkey",
+          "public",
+          "\"public\".\"MovieActor\"",
+          "f",
+          "[\"actorId\"]",
+          "\"public\".\"Actor\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.MovieGenre.MovieGenre_movieId_fkey",
+    "label": "Add foreign key \"MovieGenre_movieId_fkey\" on \"MovieGenre\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "MovieGenre_movieId_fkey",
+        "table": "MovieGenre"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"MovieGenre_movieId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "MovieGenre_movieId_fkey",
+          "public",
+          "\"public\".\"MovieGenre\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"MovieGenre_movieId_fkey\" on \"MovieGenre\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"MovieGenre_movieId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"MovieGenre\"\nADD CONSTRAINT \"MovieGenre_movieId_fkey\"\nFOREIGN KEY (\"movieId\")\nREFERENCES \"public\".\"Movie\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"MovieGenre_movieId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "MovieGenre_movieId_fkey",
+          "public",
+          "\"public\".\"MovieGenre\"",
+          "f",
+          "[\"movieId\"]",
+          "\"public\".\"Movie\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.MovieGenre.MovieGenre_genreId_fkey",
+    "label": "Add foreign key \"MovieGenre_genreId_fkey\" on \"MovieGenre\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "MovieGenre_genreId_fkey",
+        "table": "MovieGenre"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"MovieGenre_genreId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "MovieGenre_genreId_fkey",
+          "public",
+          "\"public\".\"MovieGenre\""
+        ],
+        "expectation": {
+          "expects": "absent",
+          "object": "FK \"MovieGenre_genreId_fkey\" on \"MovieGenre\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"MovieGenre_genreId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"MovieGenre\"\nADD CONSTRAINT \"MovieGenre_genreId_fkey\"\nFOREIGN KEY (\"genreId\")\nREFERENCES \"public\".\"Genre\" (\"id\")\nON DELETE CASCADE"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"MovieGenre_genreId_fkey\" exists with the planned columns, referenced table and actions",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3) AND \"c\".\"contype\" = $4 AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"conkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"conrelid\" AND key_attribute.attnum = key_column.attnum) = ($5)::jsonb AND \"c\".\"confrelid\" = to_regclass($6) AND (SELECT coalesce(jsonb_agg(key_attribute.attname ORDER BY key_column.position), '[]'::jsonb) FROM unnest(\"c\".\"confkey\"::int2[]) WITH ORDINALITY AS key_column(attnum, position) JOIN pg_attribute key_attribute ON key_attribute.attrelid = \"c\".\"confrelid\" AND key_attribute.attnum = key_column.attnum) = ($7)::jsonb AND \"c\".\"confdeltype\" = $8 AND \"c\".\"confupdtype\" = $9)) AS \"result\"",
+        "params": [
+          "MovieGenre_genreId_fkey",
+          "public",
+          "\"public\".\"MovieGenre\"",
+          "f",
+          "[\"genreId\"]",
+          "\"public\".\"Genre\"",
+          "[\"id\"]",
+          "c",
+          "a"
+        ]
+      }
+    ]
+  }
+]

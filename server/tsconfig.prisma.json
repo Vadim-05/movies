@@ -1,0 +1,14 @@
+
+{
+    "compilerOptions": {
+      "target": "ES2022",
+      "module": "preserve",
+      "moduleResolution": "bundler",
+      "strict": true,
+      "skipLibCheck": true,
+      "types": ["node"],
+      "noEmit": true
+    },
+    "files": ["prisma.config.ts"]
+  }
+  
